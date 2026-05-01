@@ -1,4 +1,6 @@
 ﻿  Game.cpp
+C:\Users\USER\Desktop\github\CPPGame\Snake\Snake\Game.cpp(52,33): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Snake.cpp
   main.cpp
   코드를 생성하고 있습니다...
   Snake.vcxproj -> C:\Users\USER\Desktop\github\CPPGame\Snake\x64\Debug\Snake.exe
