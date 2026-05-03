@@ -1,9 +1,11 @@
 #pragma once
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
 
 #include "Point.h"
 #include "Direction.h"
+
 #include "Snake.h"
 #include "Food.h"
 
@@ -13,6 +15,8 @@ private:
 	Snake m_snake;
 	Food m_food;
 	bool gameOver;
+	char m_key;
+	Direction curDir;
 
 public:
 	Game();								// Food와 Snake는 각각의 생성자에게..
@@ -26,8 +30,8 @@ public:
 	void screenFlipping();				// flipping screen
 	void screenClear();					// clear out screen
 	void screenRelease();				// free screen
-	void screenPrint(int x, int y,		// print screen
-		char board[ROW][COL]);			
+	void screenPrint(					// print screen
+	int x, int y, char board[ROW][COL]);			
 
 	void drawBoard();					// set buffer
 	void drawSnake();					// draw snake on buf

@@ -4,6 +4,10 @@ static char board[ROW][COL];
 static int g_nScreenIndex = 0;
 static HANDLE g_hScreen[2];
 
+////////////////////////////////////////////////////////////////////////////////
+// Main
+////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
 	Game g;
@@ -15,6 +19,8 @@ int main()
 		g.render();
 		g.input();
 		g.update();
+
+		Sleep(80);
 	}
 
 	g.screenRelease();
@@ -22,21 +28,36 @@ int main()
 	return 0;
 }
 
-Game::Game() : gameOver(true)
+Game::Game() : gameOver(true), curDir(Direction::RIGHT), m_key('d')
 {
-	// just gameOver Init!
+
 }
 
-void Game::input()
+void Game::input()	// switch fall-through 유의!
 {
-	//std::cin >> m_inputBuf;
-	// input에 따라 snake의 head의 direction이 변화해야 함
+	if (_kbhit()) m_key = _getch();
+
+	switch (m_key) {
+	case 'w':
+		curDir = Direction::UP;
+		break;
+	case 's':
+		curDir = Direction::DOWN;
+		break;
+	case 'a':
+		curDir = Direction::LEFT;
+		break;
+	case 'd':
+		curDir = Direction::RIGHT;
+		break;
+	}
 }
 
 void Game::update()
 {
 	// snake의 위치를 direction에 따라 update 해줘야 함
-	
+	m_snake.updateDirection(curDir);
+	m_snake.updateSnake();
 }
 
 void Game::render()
@@ -56,7 +77,7 @@ void Game::screenInit()
 	cci.dwSize = 1;
 	cci.bVisible = FALSE;
 
-	for (int i = 0; i < 2; i++) 
+	for (int i = 0; i < 2; i++)
 	{
 		g_hScreen[i] = CreateConsoleScreenBuffer(
 			GENERIC_READ | GENERIC_WRITE,
@@ -110,6 +131,20 @@ void Game::screenPrint(int x, int y, char board[ROW][COL])
 	}
 }
 
+void Game::drawBoard()
+{
+	for (int i = 0; i < ROW; i++)
+	{
+		for (int j = 0; j < COL; j++)
+		{
+			if (i == 0 || i == (ROW - 1) || j == 0 || j == (COL - 1))
+				board[i][j] = '*';
+			else
+				board[i][j] = ' ';
+		}
+	}
+}
+
 void Game::drawSnake()
 {
 	Point tmpHead;
@@ -123,20 +158,6 @@ void Game::drawSnake()
 	for (int i = 0; i < vectorSize; i++)
 	{
 		board[tmpBody[i].row][tmpBody[i].col] = '#';
-	}
-}
-
-void Game::drawBoard()
-{
-	for (int i = 0; i < ROW; i++)
-	{
-		for (int j = 0; j < COL; j++)
-		{
-			if (i == 0 || i == (ROW - 1) || j == 0 || j == (COL - 1))
-				board[i][j] = '*';
-			else
-				board[i][j] = ' ';
-		}
 	}
 }
 

@@ -17,6 +17,70 @@ Snake::~Snake()
 	m_body.clear();
 }
 
+void Snake::updateDirection(Direction dir)
+{
+	m_dir = dir;
+}
+
+void Snake::updateSnake()
+{
+	Point oldHead;
+
+	switch (m_dir) {
+	case Direction::UP:
+		oldHead = m_head;
+
+		for (int i = (m_bodyLength-1); i > 0; i--)
+		{
+			m_body[i] = { m_body[i-1].row, m_body[i - 1].col };
+		}
+		m_body[0] = { oldHead.row, oldHead.col };
+
+		m_head = { oldHead.row - 1, oldHead.col };
+
+		break;
+
+	case Direction::DOWN:
+		oldHead = m_head;
+
+		for (int i = (m_bodyLength - 1); i > 0; i--)
+		{
+			m_body[i] = { m_body[i - 1].row, m_body[i - 1].col };
+		}
+		m_body[0] = { oldHead.row, oldHead.col };
+
+		m_head = { oldHead.row + 1, oldHead.col };
+
+		break;
+
+	case Direction::LEFT:
+		oldHead = m_head;
+
+		for (int i = (m_bodyLength - 1); i > 0; i--)
+		{
+			m_body[i] = { m_body[i - 1].row, m_body[i - 1].col };
+		}
+		m_body[0] = { oldHead.row, oldHead.col };
+
+		m_head = { oldHead.row, oldHead.col - 1 };
+
+		break;
+
+	case Direction::RIGHT:
+		oldHead = m_head;
+
+		for (int i = (m_bodyLength - 1); i > 0; i--)
+		{
+			m_body[i] = { m_body[i - 1].row, m_body[i - 1].col };
+		}
+		m_body[0] = { oldHead.row, oldHead.col };
+
+		m_head = { oldHead.row, oldHead.col + 1 };
+
+		break;
+	}
+}
+
 Point Snake::getHead()
 {
 	return m_head;
