@@ -29,7 +29,6 @@
   <ItemGroup>
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Snake.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
