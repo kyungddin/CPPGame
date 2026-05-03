@@ -49,7 +49,9 @@ void ScreenInit()
 
 void ScreenFlipping() // 화면 전환 함수
 {
-    SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]);
+    SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]); 
+    // 여기서 실제로 출력
+    // 따라서 그 이전에 ScreenPrint로 버퍼에 그림을 그려둔 것
     g_nScreenIndex = !g_nScreenIndex;
 }
 
@@ -80,6 +82,7 @@ void ScreenPrint(int x, int y, char* string)
     COORD CursorPosition = { x, y };
     SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
     WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
+    // WriteFile을 통해 버퍼에 그린다
 }
 
 void Render()
